@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useEffect, useState } from 'react'
 import type { User } from '@supabase/supabase-js'
@@ -35,25 +36,25 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="text-xl font-bold text-gray-900">
+            <Link href="/" className="text-xl font-bold text-gray-900">
               USC Colaboratory
-            </a>
+            </Link>
           </div>
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <a
+                <Link
                   href="/post"
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700"
                 >
                   Post Project
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/dashboard"
                   className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Dashboard
-                </a>
+                </Link>
                 <button
                   onClick={handleSignOut}
                   className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
@@ -63,18 +64,18 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <a
+                <Link
                   href="/login"
                   className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Sign in
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/signup"
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700"
                 >
                   Sign up
-                </a>
+                </Link>
               </>
             )}
           </div>
