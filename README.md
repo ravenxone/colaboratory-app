@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# USC Colaboratory
+
+A collaboration platform for USC students to post projects and find teammates with specific skill sets.
+
+## Features
+
+- **Authentication**: USC email (@usc.edu) only authentication via Supabase Auth
+- **Project Board**: Browse all open projects with search and role filtering
+- **Project Details**: View project descriptions, videos, user problems, and poster credentials
+- **Collaboration Requests**: Students can submit requests to collaborate with project posters
+- **Post Projects**: Create new project listings with validation (user interviews required)
+- **Dashboard**: View your projects and manage collaboration requests
+
+## Tech Stack
+
+- **Framework**: Next.js 14+ (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database & Auth**: Supabase
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
+
+```bash
+cd colaboratory-app
+```
+
+### 2. Set up Supabase
+
+1. Create a new Supabase project at [supabase.com](https://supabase.com)
+2. Run the SQL schema in `supabase-schema.sql` in the Supabase SQL Editor
+3. Copy your project URL and anon key
+
+### 3. Configure environment variables
+
+Update `.env.local`:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+### 4. Install dependencies
+
+```bash
+npm install
+```
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Schema
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Tables
 
-## Learn More
+- **profiles**: User profiles (linked to auth.users)
+- **projects**: Project listings with details, video URLs, and user validation
+- **collaboration_requests**: Collaboration requests from students to project posters
 
-To learn more about Next.js, take a look at the following resources:
+See `supabase-schema.sql` for the complete schema with Row Level Security policies.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Deploy to Vercel
 
-## Deploy on Vercel
+1. Push your code to GitHub
+2. Import the project in Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app is optimized for Vercel's platform with:
+- Server-side rendering for SEO
+- Edge middleware for auth
+- Automatic optimization
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+colaboratory-app/
+├── app/
+│   ├── dashboard/      # User dashboard
+│   ├── login/          # Login page
+│   ├── post/           # Post new project
+│   ├── projects/[id]/  # Project detail page
+│   ├── signup/         # Signup page
+│   └── page.tsx        # Home page (project board)
+├── components/
+│   ├── Dashboard.tsx
+│   ├── Navbar.tsx
+│   ├── PostProjectForm.tsx
+│   ├── ProjectBoard.tsx
+│   └── ProjectDetail.tsx
+├── lib/
+│   ├── database.types.ts
+│   └── supabase/
+│       ├── client.ts
+│       ├── middleware.ts
+│       └── server.ts
+└── supabase-schema.sql
+```
+
+## Key Features Implementation
+
+### Authentication
+- Email/password auth with Supabase
+- Domain restriction to @usc.edu emails
+- Protected routes via middleware
+
+### Project Board
+- Dynamic role filters (default + custom roles)
+- Real-time search
+- YC-style layout
+
+### Project Posting
+- User validation checkbox
+- Video URL support (YouTube/Loom)
+- Custom role creation
+- User problem description required
+
+### Collaboration Flow
+- Skills selection via checkboxes
+- Contact info collection
+- Requests stored in database (not emailed)
+- Poster views all requests in dashboard
+
+## License
+
+MIT
